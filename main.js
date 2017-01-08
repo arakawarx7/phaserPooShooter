@@ -32,6 +32,7 @@ var mainstate = {
 		player = game.add.sprite(game.world.centerX,game.world.centerY + 150 , 'player');
 		player.enableBody = true;
 		player.physicsBodyType = Phaser.Physics.ARCADE;
+				
 
 		game.physics.enable(player,Phaser.Physics.ARCADE);
 
@@ -73,7 +74,13 @@ var mainstate = {
 		game.physics.arcade.overlap(enemies,player,collisionPlayer,null,this);
 
 		player.body.velocity.x = 0;
+		player.body.gravity.y =900;
+
 		cloud.tilePosition.y += backgroundCloudSpeed;
+
+		if(cursors.up.isDown){
+			player.body.velocity.y = -350;
+		}
 
 		if(cursors.left.isDown){
 			player.body.velocity.x = -350;
