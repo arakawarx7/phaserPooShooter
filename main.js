@@ -10,6 +10,11 @@ var fireButton;
 
 var enemies;
 
+var score = 0;
+var scoreText;
+var winText;
+
+
 var mainstate = {
 	preload:function(){
 
@@ -45,6 +50,9 @@ var mainstate = {
 
 	createEnemies();
 
+	scoreText =game.add.text(0,550,'score:',{font:'32px Arial', fill:'#fff'});
+	winText = game.add.text(game.world.centerX,game.world.centerY, 'you Win' ,{font: '32px Arial', fill:'#fff'});
+	winText.visible = false;
 	},
 
 	update:function(){
@@ -66,6 +74,11 @@ var mainstate = {
 			fireBullet();
 		}
 
+	scoreText.text = 'score:' + score;
+	if(score == 4000){
+		winText.visible = true;
+		scoreText.visible = false;
+	}
 
 	},
 
@@ -107,6 +120,8 @@ function descend(){
 function collisionHandler(bullet,enemy){
 	bullet.kill();
 	enemy.kill();
+
+	score += 100;
 }
 
 
