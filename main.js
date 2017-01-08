@@ -13,6 +13,7 @@ var enemies;
 var score = 0;
 var scoreText;
 var winText;
+var gameOverText;
 
 
 var mainstate = {
@@ -25,39 +26,51 @@ var mainstate = {
 	},
 
 	create:function(){
-	cloud = game.add.tileSprite(0,0,800,600,'backgroundCloud');
-	backgroundCloudSpeed = 3;
+		cloud = game.add.tileSprite(0,0,800,600,'backgroundCloud');
+		backgroundCloudSpeed = 3;
 
-	player = game.add.sprite(game.world.centerX,game.world.centerY + 150 , 'player');
-	game.physics.enable(player,Phaser.Physics.ARCADE);
+		player = game.add.sprite(game.world.centerX,game.world.centerY + 150 , 'player');
+		player.enableBody = true;
+		player.physicsBodyType = Phaser.Physics.ARCADE;
 
-	cursors = game.input.keyboard.createCursorKeys();
+		game.physics.enable(player,Phaser.Physics.ARCADE);
 
-	bullets = game.add.group();
-	bullets.enableBody = true;
-	bullets.physicsBodyType = Phaser.Physics.ARCADE;
-	bullets.createMultiple(30, 'bullet');
-	bullets.setAll('anchor.x', -0.5);
-	bullets.setAll('anchor.y',0.5);
-	bullets.setAll('outOfBoundsKill', true);
-	bullets.setAll('checkWorldBounds', true);
+		cursors = game.input.keyboard.createCursorKeys();
 
-	fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		bullets = game.add.group();
+		bullets.enableBody = true;
+		bullets.physicsBodyType = Phaser.Physics.ARCADE;
+		bullets.createMultiple(30, 'bullet');
+		bullets.setAll('anchor.x', -0.5);
+		bullets.setAll('anchor.y',0.5);
+		bullets.setAll('outOfBoundsKill', true);
+		bullets.setAll('checkWorldBounds', true);
 
-	enemies = game.add.group();
-	enemies.enableBody = true;
-	enemies.physicsBodyType = Phaser.Physics.ARCADE;
+		fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-	createEnemies();
+		enemies = game.add.group();
+		enemies.enableBody = true;
+		enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
-	scoreText =game.add.text(0,550,'score:',{font:'32px Arial', fill:'#fff'});
-	winText = game.add.text(game.world.centerX,game.world.centerY, 'you Win' ,{font: '32px Arial', fill:'#fff'});
-	winText.visible = false;
+		createEnemies();
+
+		scoreText =game.add.text(0,550,'score:',{font:'32px Arial', fill:'#fff'});
+		winText = game.add.text(game.world.centerX,game.world.centerY, 'you Win' ,{font: '32px Arial', fill:'#fff'});
+		winText.visible = false;
+
+		gameOverText = game.add.text(game.world.centerX,game.world.centerY, 'you LOSE!!!' ,{font: '50px Arial', fill:'#fff'});
+		gameOverText.visible = false;
+
+		game.time.events.loop(Phaser.Timer.SECOND * 1, descend, this);
+		// game.time.events.loop(Phaser.Timer.SECOND, updateCounter, this);
+
 	},
 
 	update:function(){
 
 		game.physics.arcade.overlap(bullets,enemies,collisionHandler,null,this);
+
+		game.physics.arcade.overlap(enemies,player,collisionPlayer,null,this);
 
 		player.body.velocity.x = 0;
 		cloud.tilePosition.y += backgroundCloudSpeed;
@@ -122,6 +135,14 @@ function collisionHandler(bullet,enemy){
 	enemy.kill();
 
 	score += 100;
+}
+
+function collisionPlayer(enemy,player){
+	enemy.kill();
+	var playerKilled = true;
+	if(playerKilled == true){
+		gameOverText.visible = true;
+	}
 }
 
 
