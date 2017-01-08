@@ -98,8 +98,8 @@ function fireBullet(){
 
 function createEnemies(){
 	for(var y = 0; y < 4; y++){
-		for(var x = 0; x < 10; x++){
-			var enemy = enemies.create(x*60,y*70, 'enemy');
+		for(var x = 0; x < 7; x++){
+			var enemy = enemies.create(x*100,y*70, 'enemy');
 			enemy.anchor.setTo(0.5,0.5);
 		}
 	}
