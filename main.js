@@ -95,7 +95,7 @@ var mainstate = {
 		}
 
 	scoreText.text = 'score:' + score;
-	if(score == 4000){
+	if(score == 2800){
 		winText.visible = true;
 		scoreText.visible = false;
 	}
