@@ -74,12 +74,12 @@ var mainstate = {
 		game.physics.arcade.overlap(enemies,player,collisionPlayer,null,this);
 
 		player.body.velocity.x = 0;
-		player.body.gravity.y =900;
+		// player.body.gravity.y =900;
 
 		cloud.tilePosition.y += backgroundCloudSpeed;
 
 		if(cursors.up.isDown){
-			player.body.velocity.y = -350;
+			// player.body.velocity.y = -350;
 		}
 
 		if(cursors.left.isDown){
