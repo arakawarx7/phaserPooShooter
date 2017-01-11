@@ -16,6 +16,7 @@ var winText;
 var gameOverText;
 var buttonRight;
 var buttonLeft;
+var buttonShoot;
 
 
 var mainstate = {
@@ -26,7 +27,9 @@ var mainstate = {
 	game.load.image('bullet', "assets/bullet.png");
 	game.load.image('enemy', "assets/enemy.png");
 	game.load.image('buttonRight', "assets/arrowRight.png");
-		game.load.image('buttonLeft', "assets/arrowLeft.png");
+	game.load.image('buttonLeft', "assets/arrowLeft.png");
+	game.load.image('buttonShoot', "assets/buttonShoot.png");
+
 
 	},
 
@@ -58,8 +61,9 @@ var mainstate = {
 		enemies.enableBody = true;
 		enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
-		 buttonRight = game.add.button(game.world.centerX -300, 400, 'buttonRight', actionOnClick, this, 2, 1, 0);
-		 buttonLeft = game.add.button(game.world.centerX - 395, 400, 'buttonLeft', actionOnClick, this, 2, 1, 0);
+		 buttonRight = game.add.button(game.world.centerX -300, 400, 'buttonRight');
+		 buttonLeft = game.add.button(game.world.centerX -395, 400, 'buttonLeft');
+		 buttonShoot = game.add.button(game.world.centerX +235, 400, 'buttonShoot');
 
 
 		createEnemies();
@@ -95,6 +99,16 @@ var mainstate = {
 			player.body.velocity.x = -350;
 		}
 		
+		
+
+		if(cursors.right.isDown){
+			player.body.velocity.x = 350;
+		}
+
+		if(fireButton.isDown){
+			fireBullet();
+		}
+
 		if(buttonRight.input.pointerOver()){
 			player.body.velocity.x = 350;
 			console.log("right");
@@ -105,11 +119,7 @@ var mainstate = {
 			console.log("left");
 		}
 
-		if(cursors.right.isDown){
-			player.body.velocity.x = 350;
-		}
-
-		if(fireButton.isDown){
+		if(buttonShoot.input.pointerOver()){
 			fireBullet();
 		}
 
