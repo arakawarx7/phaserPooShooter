@@ -14,6 +14,8 @@ var score = 0;
 var scoreText;
 var winText;
 var gameOverText;
+var buttonRight;
+var buttonLeft;
 
 
 var mainstate = {
@@ -23,6 +25,9 @@ var mainstate = {
 	game.load.image('player', "assets/player.png");
 	game.load.image('bullet', "assets/bullet.png");
 	game.load.image('enemy', "assets/enemy.png");
+	game.load.image('buttonRight', "assets/arrowRight.png");
+		game.load.image('buttonLeft', "assets/arrowLeft.png");
+
 	},
 
 	create:function(){
@@ -52,6 +57,10 @@ var mainstate = {
 		enemies = game.add.group();
 		enemies.enableBody = true;
 		enemies.physicsBodyType = Phaser.Physics.ARCADE;
+
+		 buttonRight = game.add.button(game.world.centerX -325, 400, 'buttonRight', actionOnClick, this, 2, 1, 0);
+		 buttonLeft = game.add.button(game.world.centerX - 395, 400, 'buttonLeft', actionOnClick, this, 2, 1, 0);
+
 
 		createEnemies();
 
@@ -84,6 +93,16 @@ var mainstate = {
 
 		if(cursors.left.isDown){
 			player.body.velocity.x = -350;
+		}
+		
+		if(buttonRight.input.pointerOver()){
+			player.body.velocity.x = -350;
+			console.log("right");
+		}
+
+		if(buttonLeft.input.pointerOver()){
+			player.body.velocity.x = 350;
+			console.log("left");
 		}
 
 		if(cursors.right.isDown){
@@ -150,6 +169,11 @@ function collisionPlayer(enemy,player){
 	if(playerKilled == true){
 		gameOverText.visible = true;
 	}
+}
+
+function actionOnClick () {
+	player.body.velocity.x = 350;  
+	console.log("actionOnClick")
 }
 
 
