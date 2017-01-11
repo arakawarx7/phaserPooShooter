@@ -171,8 +171,7 @@ function collisionPlayer(enemy,player){
 	}
 }
 
-function actionOnClick () {
-	player.body.velocity.x = 350;  
+function actionOnClick () { 
 	console.log("actionOnClick")
 }
 
