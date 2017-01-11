@@ -58,7 +58,7 @@ var mainstate = {
 		enemies.enableBody = true;
 		enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
-		 buttonRight = game.add.button(game.world.centerX -325, 400, 'buttonRight', actionOnClick, this, 2, 1, 0);
+		 buttonRight = game.add.button(game.world.centerX -300, 400, 'buttonRight', actionOnClick, this, 2, 1, 0);
 		 buttonLeft = game.add.button(game.world.centerX - 395, 400, 'buttonLeft', actionOnClick, this, 2, 1, 0);
 
 
