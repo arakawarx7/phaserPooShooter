@@ -95,13 +95,13 @@ var mainstate = {
 			player.body.velocity.x = -350;
 		}
 		
-		if(buttonRight.input.pointerDown()){
-			player.body.velocity.x = -350;
+		if(buttonRight.input.pointerOver()){
+			player.body.velocity.x = 350;
 			console.log("right");
 		}
 
 		if(buttonLeft.input.pointerDown()){
-			player.body.velocity.x = 350;
+			player.body.velocity.x = -350;
 			console.log("left");
 		}
 
