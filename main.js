@@ -100,7 +100,7 @@ var mainstate = {
 			console.log("right");
 		}
 
-		if(buttonLeft.input.pointerDown()){
+		if(buttonLeft.input.pointerOver()){
 			player.body.velocity.x = -350;
 			console.log("left");
 		}
