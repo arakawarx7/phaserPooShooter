@@ -63,7 +63,7 @@ var mainstate = {
 
 		 buttonRight = game.add.button(game.world.centerX -300, 400, 'buttonRight');
 		 buttonLeft = game.add.button(game.world.centerX -395, 400, 'buttonLeft');
-		 buttonShoot = game.add.button(game.world.centerX +235, 400, 'buttonShoot');
+		 buttonShoot = game.add.button(game.world.centerX +305, 400, 'buttonShoot');
 
 
 		createEnemies();
