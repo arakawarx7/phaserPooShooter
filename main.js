@@ -132,11 +132,7 @@ var mainstate = {
 	},
 
 
-render: function () {
 
-       buttonLeft.input.pointerOver().debug();
-
-    }
 
 }
 
