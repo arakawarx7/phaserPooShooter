@@ -4,6 +4,10 @@ var cursors;
 var backgroundCloudSpeed;
 var player;
 
+var enemyBullets;
+var enemyBulletTime = 0;
+var enemyAutoFire;
+
 var bullets;
 var bulletTime = 0;
 var fireButton;
@@ -29,6 +33,8 @@ var mainstate = {
 	game.load.image('buttonRight', "assets/arrowRight.png");
 	game.load.image('buttonLeft', "assets/arrowLeft.png");
 	game.load.image('buttonShoot', "assets/buttonShoot.png");
+	game.load.image('enemybullet', "assets/dollar.png");
+
 
 
 	},
@@ -54,6 +60,16 @@ var mainstate = {
 		bullets.setAll('anchor.y',0.5);
 		bullets.setAll('outOfBoundsKill', true);
 		bullets.setAll('checkWorldBounds', true);
+
+		enemyBullets = game.add.group();
+		enemyBullets.enableBody = true;
+		enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
+		enemyBullets.createMultiple(1, 'enemybullet');
+		enemyBullets.setAll('anchor.x', -0.5);
+		enemyBullets.setAll('anchor.y',0.5);
+		enemyBullets.setAll('outOfBoundsKill', true);
+		enemyBullets.setAll('checkWorldBounds', true);
+
 
 		fireButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
@@ -81,15 +97,18 @@ var mainstate = {
 	},
 
 	update:function(){
-
+		// code below is for any object that collides with each other (param1,param2,functionName,null,this)
 		game.physics.arcade.overlap(bullets,enemies,collisionHandler,null,this);
-
 		game.physics.arcade.overlap(enemies,player,collisionPlayer,null,this);
+		game.physics.arcade.overlap(enemyBullets,player,collisionEnemyBullet,null,this);
+
 
 		player.body.velocity.x = 0;
-		 player.body.gravity.y =900;
+		 // player.body.gravity.y =900;
 
 		cloud.tilePosition.y += backgroundCloudSpeed;
+
+		enemyFireBullet();
 
 		if(cursors.up.isDown){
 			 player.body.velocity.y = -350;
@@ -136,6 +155,19 @@ var mainstate = {
 
 }
 
+
+function enemyFireBullet(){
+	if(game.time.now > enemyBulletTime){
+		enemyBullet = enemyBullets.getFirstExists(false);
+
+		if(enemyBullet){
+			enemyBullet.reset(enemies.x +14,enemies.y);
+			enemyBullet.body.velocity.y = 400;
+			enemyBulletTime = game.time.now + 200;
+		}
+	}
+}
+
 function fireBullet(){
 	if(game.time.now > bulletTime){
 		bullet = bullets.getFirstExists(false);
@@ -176,8 +208,17 @@ function collisionHandler(bullet,enemy){
 	score += 100;
 }
 
-function collisionPlayer(enemy,player){
-	enemy.kill();
+function collisionPlayer(player,enemy){
+	// enemy.kill();
+    player.kill();
+	var playerKilled = true;
+	if(playerKilled == true){
+		gameOverText.visible = true;
+	}
+}
+
+function collisionEnemyBullet(enemybullet,player){
+	enemybullet.kill();
 	var playerKilled = true;
 	if(playerKilled == true){
 		gameOverText.visible = true;
