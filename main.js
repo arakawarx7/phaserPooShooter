@@ -145,12 +145,12 @@ var mainstate = {
 			playerKeys.visible = false;
 		}
 
-		if(buttonRight.input.pointerOver()){
+		if(buttonRight.input.pointerDown()){
 			player.body.velocity.x = 350;
 			console.log("right");
 		}
 
-		if(buttonLeft.input.pointerOver()){
+		if(buttonLeft.input.pointerDown()){
 			player.body.velocity.x = -350;
 			console.log("left");
 		}
