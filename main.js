@@ -18,9 +18,13 @@ var score = 0;
 var scoreText;
 var winText;
 var gameOverText;
+
+var mobileView;
 var buttonRight;
 var buttonLeft;
 var buttonShoot;
+
+
 var playerKeys;
 
 
@@ -35,6 +39,7 @@ var mainstate = {
 	game.load.image('buttonLeft', "assets/arrowLeft.png");
 	game.load.image('buttonShoot', "assets/buttonShoot.png");
 	game.load.image('enemybullet', "assets/dollar.png");
+	game.load.image('mobileView', "assets/mobile.png");
 
 
 
@@ -78,10 +83,14 @@ var mainstate = {
 		enemies.enableBody = true;
 		enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
-		buttonRight = game.add.button(game.world.centerX -300, 400, 'buttonRight');
-		buttonLeft = game.add.button(game.world.centerX -395, 400, 'buttonLeft');
-		buttonShoot = game.add.button(game.world.centerX +305, 400, 'buttonShoot');
 
+		mobileView = game.add.button(game.world.centerX +305, 10, 'mobileView');
+		buttonRight = game.add.button(game.world.centerX -300, 400, 'buttonRight');
+		buttonRight.visible = false;
+		buttonLeft = game.add.button(game.world.centerX -395, 400, 'buttonLeft');
+		buttonLeft.visible = false;
+		buttonShoot = game.add.button(game.world.centerX +305, 400, 'buttonShoot');
+		buttonShoot.visible = false;
 
 		createEnemies();
 		playerKeys = game.add.text(0,560, 'USE Left & right arrows to move and SPACEBAR to Shoot' ,{font: '30px Arial', fill:'#fff'});
@@ -120,7 +129,6 @@ var mainstate = {
 			player.body.velocity.x = -350;
 		}
 		
-		
 
 		if(cursors.right.isDown){
 			player.body.velocity.x = 350;
@@ -128,6 +136,13 @@ var mainstate = {
 
 		if(fireButton.isDown){
 			fireBullet();
+		}
+
+		if(mobileView.input.pointerOver()){
+			buttonRight.visible = true;
+			buttonLeft.visible = true;
+			buttonShoot.visible = true;
+			playerKeys.visible = false;
 		}
 
 		if(buttonRight.input.pointerOver()){
