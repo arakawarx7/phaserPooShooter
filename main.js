@@ -21,6 +21,7 @@ var gameOverText;
 var buttonRight;
 var buttonLeft;
 var buttonShoot;
+var playerKeys;
 
 
 var mainstate = {
@@ -65,7 +66,7 @@ var mainstate = {
 		enemyBullets.enableBody = true;
 		enemyBullets.physicsBodyType = Phaser.Physics.ARCADE;
 		enemyBullets.createMultiple(1, 'enemybullet');
-		enemyBullets.setAll('anchor.x', -0.5);
+		enemyBullets.setAll('anchor.x', -3.5);
 		enemyBullets.setAll('anchor.y',0.5);
 		enemyBullets.setAll('outOfBoundsKill', true);
 		enemyBullets.setAll('checkWorldBounds', true);
@@ -77,14 +78,15 @@ var mainstate = {
 		enemies.enableBody = true;
 		enemies.physicsBodyType = Phaser.Physics.ARCADE;
 
-		 buttonRight = game.add.button(game.world.centerX -300, 400, 'buttonRight');
-		 buttonLeft = game.add.button(game.world.centerX -395, 400, 'buttonLeft');
-		 buttonShoot = game.add.button(game.world.centerX +305, 400, 'buttonShoot');
+		buttonRight = game.add.button(game.world.centerX -300, 400, 'buttonRight');
+		buttonLeft = game.add.button(game.world.centerX -395, 400, 'buttonLeft');
+		buttonShoot = game.add.button(game.world.centerX +305, 400, 'buttonShoot');
 
 
 		createEnemies();
+		playerKeys = game.add.text(0,560, 'USE Left & right arrows to move and SPACEBAR to Shoot' ,{font: '30px Arial', fill:'#fff'});
 
-		scoreText =game.add.text(0,550,'score:',{font:'32px Arial', fill:'#fff'});
+		scoreText = game.add.text(0,0,'score:',{font:'40px Arial', fill:'#fff'});
 		winText = game.add.text(game.world.centerX,game.world.centerY, 'you Win' ,{font: '32px Arial', fill:'#fff'});
 		winText.visible = false;
 
@@ -101,8 +103,8 @@ var mainstate = {
 		game.physics.arcade.overlap(bullets,enemies,collisionHandler,null,this);
 		game.physics.arcade.overlap(enemies,player,collisionPlayer,null,this);
 		game.physics.arcade.overlap(enemyBullets,player,collisionEnemyBullet,null,this);
-
-
+		playerKeys.visible = true ;
+		// playerKeys.text ='Left & right arrows to move and SPACEBAR to Shoot';
 		player.body.velocity.x = 0;
 		 // player.body.gravity.y =900;
 
@@ -204,7 +206,6 @@ function descend(){
 function collisionHandler(bullet,enemy){
 	bullet.kill();
 	enemy.kill();
-
 	score += 100;
 }
 
